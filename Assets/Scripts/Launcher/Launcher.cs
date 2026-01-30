@@ -26,12 +26,22 @@ public partial class Launcher : MonoBehaviour
             BaseView view = viewObject.GetComponent<BaseView>();
             if (view != null)
             {
-                UIManager.Instance.views.Add(view);
+                UIManager.Instance.RegisterView(view);
             }
             else
             {
                 Debug.LogWarning($"The prefab {prefab.name} does not contain a BaseView component.");
             }
         }
+    }
+
+    private void InitializeModels()
+    {
+        
+    }
+
+    private void BindViewModels()
+    {
+        
     }
 }
