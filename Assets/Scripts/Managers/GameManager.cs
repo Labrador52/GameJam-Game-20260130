@@ -7,7 +7,7 @@ public class GameManager : SingleInstance<GameManager>, IModel
 
     public Action<GameState> GameStateChanged;
 
-    private void SetGameState(GameState newState)
+    public void SetGameState(GameState newState)
     {
         GameStateChanged?.Invoke(newState);
     }

@@ -16,16 +16,19 @@ public class StartMenuView : BaseView
     public override void BindViewModel(BaseViewModel viewModel)
     {
         startMenuViewModel = viewModel as StartMenuViewModel;
+        OnBind();
     }
 
     protected override void OnBind()
     {
-        
+        startMenuViewModel.NotifyStartMenuShown += OnStartMenuShown;
+        startMenuViewModel.NotifyStartMenuHidden += OnStartMenuHidden;
     }
 
     protected override void OnUnbind()
     {
-        
+        startMenuViewModel.NotifyStartMenuShown -= OnStartMenuShown;
+        startMenuViewModel.NotifyStartMenuHidden -= OnStartMenuHidden;
     }
 
     #region View Callbacks
