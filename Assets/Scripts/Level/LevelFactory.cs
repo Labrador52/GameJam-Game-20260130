@@ -5,6 +5,8 @@ public static class LevelFactory
 {
     public static Level CreateLevel(Vector2Int size)
     {
-        return default;
+        Level level = new Level();
+        level.Size = size;
+        return level;
     }
 }
