@@ -1,5 +1,8 @@
+using System;
+
 public class StartMenuView : BaseView
 {
+    private StartMenuViewModel startMenuViewModel;
     public override void Show()
     {
         gameObject.SetActive(true);
@@ -12,6 +15,39 @@ public class StartMenuView : BaseView
 
     public override void BindViewModel(BaseViewModel viewModel)
     {
-        // Implement binding logic here
+        startMenuViewModel = viewModel as StartMenuViewModel;
     }
+
+    protected override void OnBind()
+    {
+        
+    }
+
+    protected override void OnUnbind()
+    {
+        
+    }
+
+    #region View Callbacks
+
+    private void OnStartMenuShown()
+    {
+        Show();
+    }
+
+    private void OnStartMenuHidden()
+    {
+        Hide();
+    }
+
+    #endregion
+
+    #region View Events
+
+    public void StartGameButtonClicked()
+    {
+        startMenuViewModel?.StartGameButtonClicked();
+    }
+
+    #endregion
 }

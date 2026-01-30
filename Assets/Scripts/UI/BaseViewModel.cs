@@ -1,4 +1,4 @@
-public class BaseViewModel
+public abstract class BaseViewModel
 {
-    
+    public abstract void Initialize();
 }
