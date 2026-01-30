@@ -5,12 +5,16 @@ public partial class Launcher : MonoBehaviour
     private void Awake()
     {
         GameObject ManagerGroup = new GameObject("ManagerGroup");
+
         GameObject GameManagerGameObject = new GameObject("GameManager");
         GameManagerGameObject.AddComponent<GameManager>();
         GameManagerGameObject.transform.parent = ManagerGroup.transform;
+
         GameObject LevelManagerGameObject = new GameObject("LevelManager");
-        LevelManagerGameObject.AddComponent<LevelManager>();
+        LevelManager levelmanager = LevelManagerGameObject.AddComponent<LevelManager>();
+        levelmanager.SetDefaultLevelSize(levelConfig.LevelSize);
         LevelManagerGameObject.transform.parent = ManagerGroup.transform;
+
         GameObject UIManagerGameObject = new GameObject("UIManager");
         UIManagerGameObject.AddComponent<UIManager>();
         UIManagerGameObject.transform.parent = ManagerGroup.transform;
@@ -43,11 +47,16 @@ public partial class Launcher : MonoBehaviour
     private void InitializeModels()
     {
         StartMenuViewModel startMenuViewModel = new StartMenuViewModel();
+        startMenuViewModel.Initialize();
         UIManager.Instance.RegisterViewModel(startMenuViewModel);
     }
 
     private void BindViewModels()
     {
-        
+        if (UIManager.Instance.TryGetView<StartMenuView>(out StartMenuView startMenuView) &&
+            UIManager.Instance.TryGetViewModel<StartMenuViewModel>(out StartMenuViewModel startMenuViewModel))
+        {
+            startMenuView.BindViewModel(startMenuViewModel);
+        }
     }
 }
