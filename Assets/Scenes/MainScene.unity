@@ -232,6 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseViewPrefabs:
   - {fileID: 6834727483569477769, guid: 9d8a3fac634a401468ababc6a5ebac14, type: 3}
+  levelConfig: {fileID: 11400000, guid: 25e3fc976785ea64a8810c37648e18fb, type: 2}
 --- !u!4 &1080502345
 Transform:
   m_ObjectHideFlags: 0
