@@ -23,6 +23,6 @@ public class LevelManager : SingleInstance<LevelManager>
     {
         CurrentLevel = LevelFactory.CreateLevel(defaultLevelSize);
         GameManager.Instance.SetGameState(GameState.Level);
-        Debug.Log($"Level loaded with size: {CurrentLevel.Size}");
+        // Debug.Log($"Level loaded with size: {CurrentLevel.Size}");
     }
 }
