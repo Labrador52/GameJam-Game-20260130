@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f058a0db07cace419f0cc5edc228e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseViewPrefabs:
+  ViewPrefabs:
   - {fileID: 6834727483569477769, guid: 9d8a3fac634a401468ababc6a5ebac14, type: 3}
   - {fileID: 7531247071794640478, guid: 51b9a3fabfe65b2488666ac54fc00712, type: 3}
   levelConfig: {fileID: 11400000, guid: 25e3fc976785ea64a8810c37648e18fb, type: 2}

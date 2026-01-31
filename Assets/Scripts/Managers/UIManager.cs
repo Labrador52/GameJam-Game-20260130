@@ -1,8 +1,14 @@
 using System.Collections.Generic;
+using UnityEngine;
 
+/// <summary>
+/// UI管理器 - 管理所有UI视图的生命周期和初始化
+/// </summary>
 public class UIManager : SingleInstance<UIManager>
 {
     protected override string GameObjectName => "UIManager";
+
+    public GameObject[] ViewPrefabs;
 
     private readonly Dictionary<System.Type, BaseView> viewTypeDictionary = new Dictionary<System.Type, BaseView>();
 
@@ -15,7 +21,7 @@ public class UIManager : SingleInstance<UIManager>
         }
         else
         {
-            UnityEngine.Debug.LogWarning($"View of type {type} is already registered.");
+            Debug.LogWarning($"View of type {type} is already registered.");
         }
     }
 
@@ -27,29 +33,79 @@ public class UIManager : SingleInstance<UIManager>
             view = baseView as T;
             return true;
         }
+        view = null;
+        return false;
+    }
+
+    /// <summary>
+    /// 初始化所有视图和其对应的视图模型
+    /// </summary>
+    public void InitializeViews(Transform parent = null)
+    {
+        if (ViewPrefabs != null)
+        {
+            foreach (var prefab in ViewPrefabs)
+            {
+                GameObject viewObject = Instantiate(prefab, parent);
+                viewObject.name = prefab.name;
+                BaseView view = viewObject.GetComponent<BaseView>();
+                view.Initialize();
+
+                if (view != null)
+                {
+                    RegisterView(view);
+                    CreateAndBindViewModel(view);
+                }
+                else
+                {
+                    Debug.LogWarning($"The prefab {prefab.name} does not contain a BaseView component.");
+                }
+            }
+        }
         else
         {
-            view = null;
-            return false;
+            Debug.LogWarning("ViewPrefabs is null or empty.");
         }
     }
 
-    public T GetView<T>() where T : BaseView
+    /// <summary>
+    /// 为视图创建并绑定相应的视图模型
+    /// </summary>
+    private void CreateAndBindViewModel(BaseView view)
     {
-        var type = typeof(T);
-        if (viewTypeDictionary.TryGetValue(type, out BaseView view))
+        if (view is StartMenuView startMenuView)
         {
-            return view as T;
+            var viewModel = new StartMenuViewModel();
+            viewModel.Initialize();
+            startMenuView.BindViewModel(viewModel);
         }
-        else
+        else if (view is LevelView levelView)
         {
-            UnityEngine.Debug.LogError($"View of type {type} is not registered.");
-            return null;
+            var viewModel = new LevelViewModel();
+            viewModel.Initialize();
+            levelView.BindViewModel(viewModel);
+        }
+        else if (view is GameObjectView gameObjectView)
+        {
+            var viewModel = new GameObjectViewModel();
+            viewModel.Initialize();
+            gameObjectView.BindViewModel(viewModel);
         }
     }
 
-    public void InstantiateViews()
+    /// <summary>
+    /// 为LevelViewModel绑定Level模型 - 在关卡加载后调用
+    /// </summary>
+    public void BindLevelModel(Level levelModel)
     {
-        
+        if (TryGetView<LevelView>(out var levelView))
+        {
+            var levelViewModel = levelView.GetViewModel();
+            if (levelViewModel != null && !levelViewModel.HasLevelModel)
+            {
+                levelViewModel.BindLevelModel(levelModel);
+                Debug.Log("Level model bound to LevelViewModel successfully.");
+            }
+        }
     }
 }

@@ -1,12 +1,14 @@
 using System;
+using UnityEngine;
 
+/// <summary>
+/// 开始菜单视图 - 处理开始菜单UI
+/// </summary>
 public class StartMenuView : BaseView<StartMenuViewModel>
 {
-    private StartMenuViewModel startMenuViewModel;
-
     public override void Initialize()
     {
-        throw new NotImplementedException();
+        
     }
     
     public override void Show()
@@ -21,19 +23,32 @@ public class StartMenuView : BaseView<StartMenuViewModel>
 
     public override void BindViewModel(StartMenuViewModel viewModel)
     {
-        throw new NotImplementedException();
+        base.BindViewModel(viewModel);
     }
 
     protected override void OnBind()
     {
-        startMenuViewModel.NotifyStartMenuShown += OnStartMenuShown;
-        startMenuViewModel.NotifyStartMenuHidden += OnStartMenuHidden;
+        if (viewModel != null)
+        {
+            viewModel.NotifyStartMenuShown += OnStartMenuShown;
+            viewModel.NotifyStartMenuHidden += OnStartMenuHidden;
+            viewModel.Bind();
+        }
     }
 
     protected override void OnUnbind()
     {
-        startMenuViewModel.NotifyStartMenuShown -= OnStartMenuShown;
-        startMenuViewModel.NotifyStartMenuHidden -= OnStartMenuHidden;
+        if (viewModel != null)
+        {
+            viewModel.NotifyStartMenuShown -= OnStartMenuShown;
+            viewModel.NotifyStartMenuHidden -= OnStartMenuHidden;
+            viewModel.Unbind();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        OnUnbind();
     }
 
     #region View Callbacks
@@ -54,7 +69,8 @@ public class StartMenuView : BaseView<StartMenuViewModel>
 
     public void StartGameButtonClicked()
     {
-        startMenuViewModel?.StartGameButtonClicked();
+        Debug.Log("Start Game Button Clicked in View");
+        viewModel?.StartGameButtonClicked();
     }
 
     #endregion
