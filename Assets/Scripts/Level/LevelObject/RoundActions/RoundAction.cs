@@ -1,4 +1,7 @@
+using System;
+
 public abstract class RoundAction
 {
-    public abstract void Execute();
+    public Action RoundActionExecuted;
+    public abstract void Execute(Level level, LevelObject levelObject);
 }
