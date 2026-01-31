@@ -25,13 +25,13 @@ public class StartMenuViewModel : BaseViewModel
         LevelManager.Instance.LoadLevel();
     }
 
-    private void OnGameStateChanged(GameState newState)
+    private void OnGameStateChanged(GameState oldState, GameState newState)
     {
         if (newState == GameState.StartMenu)
         {
             NotifyStartMenuShown?.Invoke();
         }
-        else
+        else if (oldState == GameState.StartMenu)
         {
             NotifyStartMenuHidden?.Invoke();
         }

@@ -5,11 +5,14 @@ public class GameManager : SingleInstance<GameManager>, IModel
 {
 	protected override string GameObjectName => "GameManager";
 
-    public Action<GameState> GameStateChanged;
+    private GameState currentGameState;
+
+
+    public Action<GameState, GameState> GameStateChanged;
 
     public void SetGameState(GameState newState)
     {
-        GameStateChanged?.Invoke(newState);
+        // GameStateChanged?.Invoke(newState);
     }
 }
 

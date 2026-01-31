@@ -20,9 +20,6 @@ public partial class Launcher : MonoBehaviour
         UIManagerGameObject.transform.parent = ManagerGroup.transform;
 
         InitializeUIViews();
-        InitializeModels();
-        BindViewModels();
-
     }
 
     private void InitializeUIViews()
@@ -41,22 +38,6 @@ public partial class Launcher : MonoBehaviour
             {
                 Debug.LogWarning($"The prefab {prefab.name} does not contain a BaseView component.");
             }
-        }
-    }
-
-    private void InitializeModels()
-    {
-        StartMenuViewModel startMenuViewModel = new StartMenuViewModel();
-        startMenuViewModel.Initialize();
-        UIManager.Instance.RegisterViewModel(startMenuViewModel);
-    }
-
-    private void BindViewModels()
-    {
-        if (UIManager.Instance.TryGetView<StartMenuView>(out StartMenuView startMenuView) &&
-            UIManager.Instance.TryGetViewModel<StartMenuViewModel>(out StartMenuViewModel startMenuViewModel))
-        {
-            startMenuView.BindViewModel(startMenuViewModel);
         }
     }
 }

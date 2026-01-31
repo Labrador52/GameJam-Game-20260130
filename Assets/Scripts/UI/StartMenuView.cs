@@ -1,8 +1,14 @@
 using System;
 
-public class StartMenuView : BaseView
+public class StartMenuView : BaseView<StartMenuViewModel>
 {
     private StartMenuViewModel startMenuViewModel;
+
+    public override void Initialize()
+    {
+        throw new NotImplementedException();
+    }
+    
     public override void Show()
     {
         gameObject.SetActive(true);
@@ -13,10 +19,9 @@ public class StartMenuView : BaseView
         gameObject.SetActive(false);
     }
 
-    public override void BindViewModel(BaseViewModel viewModel)
+    public override void BindViewModel(StartMenuViewModel viewModel)
     {
-        startMenuViewModel = viewModel as StartMenuViewModel;
-        OnBind();
+        throw new NotImplementedException();
     }
 
     protected override void OnBind()
