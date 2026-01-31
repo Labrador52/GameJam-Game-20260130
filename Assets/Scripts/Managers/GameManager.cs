@@ -12,7 +12,14 @@ public class GameManager : SingleInstance<GameManager>, IModel
 
     public void SetGameState(GameState newState)
     {
-        // GameStateChanged?.Invoke(newState);
+        GameState oldState = currentGameState;
+        currentGameState = newState;
+        GameStateChanged?.Invoke(oldState, newState);
+    }
+
+    public new void Initialize()
+    {
+        currentGameState = GameState.StartMenu;
     }
 }
 
