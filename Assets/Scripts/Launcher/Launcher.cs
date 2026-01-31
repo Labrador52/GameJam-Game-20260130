@@ -16,28 +16,12 @@ public partial class Launcher : MonoBehaviour
         LevelManagerGameObject.transform.parent = ManagerGroup.transform;
 
         GameObject UIManagerGameObject = new GameObject("UIManager");
-        UIManagerGameObject.AddComponent<UIManager>();
+        UIManager uIManager = UIManagerGameObject.AddComponent<UIManager>();
+        uIManager.ViewPrefabs = ViewPrefabs;
+        GameObject UIGroup = new GameObject("UI Group");
+        uIManager.InitializeViews(UIGroup.transform);
         UIManagerGameObject.transform.parent = ManagerGroup.transform;
 
-        InitializeUIViews();
-    }
-
-    private void InitializeUIViews()
-    {
-        GameObject UIGroup = new GameObject("UIGroup");
-        foreach (var prefab in BaseViewPrefabs)
-        {
-            GameObject viewObject = Instantiate(prefab, UIGroup.transform);
-            viewObject.name = prefab.name;
-            BaseView view = viewObject.GetComponent<BaseView>();
-            if (view != null)
-            {
-                UIManager.Instance.RegisterView(view);
-            }
-            else
-            {
-                Debug.LogWarning($"The prefab {prefab.name} does not contain a BaseView component.");
-            }
-        }
+        
     }
 }
